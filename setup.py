@@ -13,7 +13,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     license='Unlicense',
 
-    url='https://github.com/scholarly-python-package/scholarly',
+    #url='https://github.com/scholarly-python-package/scholarly',
+    url='https://github.com/hfchen20/scholarly',
     packages=setuptools.find_packages(),
     keywords=['Google Scholar', 'academics', 'citations'],
     classifiers=[
