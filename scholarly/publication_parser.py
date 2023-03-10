@@ -284,14 +284,14 @@ class PublicationParser(object):
                     if title_div:
                         publication['bib']['title'] = title_div.text
             # found pub_url?
-            print('In publication_parser.py: {}, found pub_url?'.format(publication['author_pub_id']), soup.find('a', class_='gsc_oci_title_link'))
+            #print('In publication_parser.py: {}, found pub_url?'.format(publication['author_pub_id']), soup.find('a', class_='gsc_oci_title_link'))
             
             if soup.find('a', class_='gsc_oci_title_link'):
                 publication['pub_url'] = soup.find(
                     'a', class_='gsc_oci_title_link')['href']
             else:
                 publication['pub_url'] = ''
-                print('Not found!')
+                #print('Not found!')
             for item in soup.find_all('div', class_='gs_scl'):
                 key = item.find(class_='gsc_oci_field').text.strip().lower()
                 val = item.find(class_='gsc_oci_value')
