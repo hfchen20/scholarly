@@ -283,15 +283,21 @@ class PublicationParser(object):
                     title_div = merged_snippet.find('div')
                     if title_div:
                         publication['bib']['title'] = title_div.text
+            # found pub_url?
+            print('In publication_parser.py: {}, found pub_url?'.format(publication['author_pub_id']), soup.find('a', class_='gsc_oci_title_link'))
+            
             if soup.find('a', class_='gsc_oci_title_link'):
                 publication['pub_url'] = soup.find(
                     'a', class_='gsc_oci_title_link')['href']
+            else:
+                publication['pub_url'] = ''
+                print('Not found!')
             for item in soup.find_all('div', class_='gs_scl'):
                 key = item.find(class_='gsc_oci_field').text.strip().lower()
                 val = item.find(class_='gsc_oci_value')
                 if key == 'authors' or key == 'inventors':
-                    publication['bib']['author'] = ' and '.join(
-                        [i.strip() for i in val.text.split(',')])
+                    publication['bib']['author'] = val.text
+                #        ' and '.join([i.strip() for i in val.text.split(',')])
                 elif key == 'journal':
                     publication['bib']['journal'] = val.text
                 elif key == 'conference':
@@ -313,6 +319,7 @@ class PublicationParser(object):
                                 'YYYY/M/D',
                                 'YYYY/MM/D']
                     publication['bib']['pub_year'] = arrow.get(val.text, patterns).year
+                    publication['bib']['pub_date'] = val.text
                 elif key == 'description':
                     # try to find all the gsh_csp if they exist
                     abstract = val.find_all(class_='gsh_csp')
